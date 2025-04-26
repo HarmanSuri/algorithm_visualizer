@@ -1,3 +1,5 @@
+from graph.graph_visualizer import visit_node, initialize_graph, close_window
+
 
 def dfs(graph: list[list[int]]) -> tuple:
     num_vertex = len(graph)
@@ -12,16 +14,22 @@ def dfs(graph: list[list[int]]) -> tuple:
     return parents
 
 
-def dfs_visit(graph: list[list[int]], vertex: int, visited: list, parent: list) -> None:
+def dfs_visit(graph: list[list[int]], vertex: int, visited: list[bool], parents: list[int]) -> None:
     visited[vertex] = True
+
+    visit_node(centres, vertex, parents, win)
 
     for neigbour in graph[vertex]:
         if not visited[neigbour]:
-            parent[neigbour] = vertex
-            dfs_visit(graph, neigbour, visited, parent)
+            parents[neigbour] = vertex
+            dfs_visit(graph, neigbour, visited, parents)
 
 
 if __name__ == '__main__':
     graph = [[1, 2], [0, 2], [0, 1, 3, 4], [2], [2]]
 
-    print(dfs(graph))
+    centres, win = initialize_graph(graph, 1000, 600)
+
+    dfs(graph)
+
+    close_window(win)
